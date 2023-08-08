@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('register', [LoginController::class, 'register']);
-Route::post('login', [LoginController::class, 'login']);
 
-Route::group(['middleware' => ['auth:api']], function () {
-    Route::post('logout', [LoginController::class, 'logout']);
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [LoginController::class, 'login']);
+    Route::get('me', [LoginController::class, 'me'])->middleware('auth:sanctum');
 });
+
